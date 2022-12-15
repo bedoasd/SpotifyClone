@@ -7,6 +7,7 @@ import android.service.media.MediaBrowserService
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.example.spotifyclone.exoplayer.callback.MusicPlayerNotificationListener
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -30,6 +31,9 @@ class MusicService : MediaBrowserServiceCompat() {
 
     @Inject
     lateinit var exoPlayer: ExoPlayer
+     var isForgroundService =false
+
+    private lateinit var musicNotificationmanager:MusicNotoificatioManager
 
     private val serviceJob = Job()
     private val serviceScope= CoroutineScope(Dispatchers.Main+serviceJob) // on cancellation don't make memory leak
@@ -52,6 +56,15 @@ class MusicService : MediaBrowserServiceCompat() {
         }
 
         sessionToken=mediaSession.sessionToken
+
+        musicNotificationmanager= MusicNotoificatioManager(
+            this,
+            mediaSession.sessionToken,
+            MusicPlayerNotificationListener(this)
+        ) {
+
+        }
+
         mediaSessionConnector=MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlayer(exoPlayer)
 
