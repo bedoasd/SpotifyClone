@@ -1,6 +1,7 @@
 package com.example.spotifyclone.di
 
 import android.content.Context
+import com.example.spotifyclone.remote.MusicDatabase
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.C.CONTENT_TYPE_MUSIC
 import com.google.android.exoplayer2.ExoPlayer
@@ -18,6 +19,13 @@ import dagger.hilt.android.scopes.ServiceScoped
 @Module
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
+
+    // we need to provide this firebase media source inside our service as an object of this class
+
+    @ServiceScoped
+    @Provides
+    fun provideMusicDatabase()=MusicDatabase()
+
 
 
     @ServiceScoped

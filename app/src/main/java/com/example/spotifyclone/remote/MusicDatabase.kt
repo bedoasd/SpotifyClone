@@ -6,6 +6,9 @@ import com.example.spotifyclone.others.Constatns.SONGS_COLLECTION
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
+
+//to get all song  as a list from firebase
+
 class MusicDatabase {
 
 
